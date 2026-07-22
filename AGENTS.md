@@ -41,6 +41,9 @@ src/main/java/com/andres/course/agy/springboot/springai/app/
 ├── Application.java
 ├── controllers/
 │   └── AiController.java
+├── dto/
+│   ├── CodeDto.java
+│   └── Requirement.java
 └── services/
     ├── AiService.java
     └── AiServiceImpl.java
@@ -49,11 +52,14 @@ src/main/java/com/andres/course/agy/springboot/springai/app/
 ### Componentes Clave:
 1. **`Application.java`**: Clase principal con la anotación `@SpringBootApplication`.
 2. **`AiController.java`**: Controlador REST mapeado en `/api/ai`. Inyecta `AiService` y expone los endpoints HTTP.
-3. **`AiService.java`**: Interfaz de servicio que define los contratos de negocio:
+3. **`Requirement.java`**: DTO (`record`) que encapsula el requerimiento de código (`requirement`).
+4. **`CodeDto.java`**: DTO (`record`) estructurado devuelto por la IA que contiene la respuesta formateada (`code`).
+5. **`AiService.java`**: Interfaz de servicio que define los contratos de negocio:
    - `String generate(String message)`
    - `String greeting(String name)`
    - `String expert(String message)`
-4. **`AiServiceImpl.java`**: Implementación anotada con `@Service`. Utiliza `ChatClient` de Spring AI para construir prompts (User y System Prompts) y obtener respuestas del modelo LLM.
+   - `CodeDto generateCode(Requirement requirement)`
+6. **`AiServiceImpl.java`**: Implementación anotada con `@Service`. Utiliza `ChatClient` de Spring AI con System Prompts y salidas estructuradas (`.entity(CodeDto.class)`).
 
 ---
 
@@ -83,6 +89,12 @@ spring.ai.ollama.chat.model=qwen3:4b
 - **Ruta:** `POST /api/ai/expert`
 - **Cuerpo (Body):** Texto plano con la consulta para el experto.
 - **Comportamiento:** Usa un System Prompt (*"Eres un experto en Java y Spring Boot. Responde de forma clara y simple."*) y envía el cuerpo de la petición como User Prompt.
+
+### 4. Generación Estructurada de Código (POST)
+- **Ruta:** `POST /api/ai/generate-code`
+- **Cuerpo (Body):** JSON `Requirement` (`{"requirement": "..."}`)
+- **Respuesta:** JSON `CodeDto` (`{"code": "..."}`)
+- **Comportamiento:** Emplea un System Prompt de Desarrollador Senior en Java/Spring Boot 4 y mapea la respuesta estructurada a `CodeDto`.
 
 ---
 

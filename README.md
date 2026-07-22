@@ -27,6 +27,7 @@ Aplicación Spring Boot para la integración con inteligencia artificial utiliza
 El proyecto implementa una arquitectura desacoplada por capas:
 
 - **Controlador:** [AiController.java](file:///Users/andres/Desktop/SpringAntigravityAI/5-spring-ai/src/main/java/com/andres/course/agy/springboot/springai/app/controllers/AiController.java) - Expone los endpoints REST `/api/ai`.
+- **DTOs (Java Records):** [Requirement.java](file:///Users/andres/Desktop/SpringAntigravityAI/5-spring-ai/src/main/java/com/andres/course/agy/springboot/springai/app/dto/Requirement.java), [CodeDto.java](file:///Users/andres/Desktop/SpringAntigravityAI/5-spring-ai/src/main/java/com/andres/course/agy/springboot/springai/app/dto/CodeDto.java) - Representación de datos de entrada/salida.
 - **Interfaz de Servicio:** [AiService.java](file:///Users/andres/Desktop/SpringAntigravityAI/5-spring-ai/src/main/java/com/andres/course/agy/springboot/springai/app/services/AiService.java) - Define las operaciones disponibles.
 - **Implementación del Servicio:** [AiServiceImpl.java](file:///Users/andres/Desktop/SpringAntigravityAI/5-spring-ai/src/main/java/com/andres/course/agy/springboot/springai/app/services/AiServiceImpl.java) - Realiza la comunicación con Ollama mediante `ChatClient`.
 
@@ -64,6 +65,18 @@ Recibe una consulta por POST en formato texto y responde utilizando el rol de un
   curl -X POST "http://localhost:8080/api/ai/expert" \
     -H "Content-Type: text/plain" \
     -d "¿Qué es la inyección de dependencias en Spring Boot?"
+  ```
+
+### 4. Generación Estructurada de Código (`/api/ai/generate-code`)
+Recibe un requerimiento en JSON y devuelve un objeto JSON estructurado `CodeDto` con el código generado por la IA.
+
+- **Método:** `POST`
+- **Cuerpo (Body):** JSON (`application/json`)
+- **Ejemplo con curl:**
+  ```bash
+  curl -X POST "http://localhost:8080/api/ai/generate-code" \
+    -H "Content-Type: application/json" \
+    -d '{"requirement": "Crea una clase Singleton en Java 25"}'
   ```
 
 ---

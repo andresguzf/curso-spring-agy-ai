@@ -1,5 +1,7 @@
 package com.andres.course.agy.springboot.springai.app.controllers;
 
+import com.andres.course.agy.springboot.springai.app.dto.CodeDto;
+import com.andres.course.agy.springboot.springai.app.dto.Requirement;
 import com.andres.course.agy.springboot.springai.app.services.AiService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,5 +33,10 @@ public class AiController {
     @PostMapping("/expert")
     public String expert(@RequestBody String message) {
         return this.aiService.expert(message);
+    }
+
+    @PostMapping("/generate-code")
+    public CodeDto generateCode(@RequestBody Requirement requirement) {
+        return this.aiService.generateCode(requirement);
     }
 }
