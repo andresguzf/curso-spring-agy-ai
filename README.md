@@ -45,13 +45,25 @@ Permite realizar consultas directas al modelo de IA.
   ```
 
 ### 2. Saludo Personalizado (`/api/ai/greeting`)
-Genera un saludo utilizando un System Prompt específico (responde en francés y en una sola línea).
+Genera un saludo utilizando un System Prompt específico.
 
 - **Método:** `GET`
 - **Parámetro Query:** `name` (opcional)
 - **Ejemplo con curl:**
   ```bash
   curl "http://localhost:8080/api/ai/greeting?name=Andres"
+  ```
+
+### 3. Consulta a Experto en Java y Spring Boot (`/api/ai/expert`)
+Recibe una consulta por POST en formato texto y responde utilizando el rol de un experto en Java y Spring Boot.
+
+- **Método:** `POST`
+- **Cuerpo (Body):** Texto plano (`text/plain`)
+- **Ejemplo con curl:**
+  ```bash
+  curl -X POST "http://localhost:8080/api/ai/expert" \
+    -H "Content-Type: text/plain" \
+    -d "¿Qué es la inyección de dependencias en Spring Boot?"
   ```
 
 ---

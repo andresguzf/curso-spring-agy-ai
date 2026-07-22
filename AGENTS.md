@@ -52,6 +52,7 @@ src/main/java/com/andres/course/agy/springboot/springai/app/
 3. **`AiService.java`**: Interfaz de servicio que define los contratos de negocio:
    - `String generate(String message)`
    - `String greeting(String name)`
+   - `String expert(String message)`
 4. **`AiServiceImpl.java`**: Implementación anotada con `@Service`. Utiliza `ChatClient` de Spring AI para construir prompts (User y System Prompts) y obtener respuestas del modelo LLM.
 
 ---
@@ -76,7 +77,12 @@ spring.ai.ollama.chat.model=qwen3:4b
 ### 2. Saludo Personalizado (System & User Prompts)
 - **Ruta:** `GET /api/ai/greeting`
 - **Parámetros:** `name` (opcional, default: `Andrés`)
-- **Comportamiento:** Usa un System Prompt (*"Responde siempre en francés y en una sola línea"*) y un User Prompt con el nombre recibido.
+- **Comportamiento:** Usa un System Prompt y un User Prompt con el nombre recibido.
+
+### 3. Experto en Java y Spring Boot (POST)
+- **Ruta:** `POST /api/ai/expert`
+- **Cuerpo (Body):** Texto plano con la consulta para el experto.
+- **Comportamiento:** Usa un System Prompt (*"Eres un experto en Java y Spring Boot. Responde de forma clara y simple."*) y envía el cuerpo de la petición como User Prompt.
 
 ---
 
