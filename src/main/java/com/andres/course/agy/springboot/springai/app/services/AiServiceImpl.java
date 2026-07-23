@@ -41,11 +41,18 @@ public class AiServiceImpl implements AiService {
     }
 
     @Override
-    public CodeDto generateCode(Requirement requirement) {
+    public String generateCode(Requirement requirement) {
         return this.chatClient.prompt()
-                .system("eres un desarrollador senior, experto en Java, Jakarta y en Spring Boot 4, con buena práctica. Respondes solo preguntas o requerimientos relacionados a Java y Spring Boot, nada más, ningún otro lenguaje ni contexto, solo programación y código de Java")
+                .system("""
+                        Eres un desarrollador senior, generador de codigo, experto en Java, Jakarta y
+                        en Spring Boot 4, con buena práctica. Respondes con codigos completo de
+                        preguntas o requerimientos relacionados a Java, JPA,
+                        Hibernate y Spring Boot, todo lo relacionado a Java,
+                        nada más, ningún otro lenguaje ni contexto,
+                        solo programación y código de Java,
+                        de lo contrario responde que no soportas esa tecnologia.
+                         Responde siempre en español, con buen orden, claro, simple y concreto. Devuelve solo JSON, formato exacto: { "code": "string" }.""")
                 .user(requirement.requirement())
-                .call()
-                .entity(CodeDto.class);
+                .call().content();
     }
 }

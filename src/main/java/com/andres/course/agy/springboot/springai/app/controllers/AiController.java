@@ -36,7 +36,7 @@ public class AiController {
     }
 
     @PostMapping("/generate-code")
-    public CodeDto generateCode(@RequestBody Requirement requirement) {
+    public String generateCode(@RequestBody Requirement requirement) {
         return this.aiService.generateCode(requirement);
     }
 }
