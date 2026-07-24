@@ -65,7 +65,21 @@ public class AiServiceImpl implements AiService {
     @Override
     public CodeExplanation explainCode(String code) {
         return this.chatClient.prompt()
-                .system("Eres un profesor experto en programación. Explica el código recibido en español, de forma simple, paso a paso y línea por línea.")
+                .system("""
+                        Eres un profesor experto en programación. Explica el código recibido en español, de forma simple, paso a paso y línea por línea.
+                        La respuesta debe ser únicamente JSON válido, sin Markdown ni bloques de código, con la siguiente estructura exacta:
+                        {
+                            "language": "string",
+                            "summary": "string",
+                            "lineByLine": [
+                                {
+                                    "line": "línea 1",
+                                    "explanation": "explicación de la línea 1"
+                                }
+                            ],
+                            "finalExplanation": "explicación final"
+                        }
+                        """)
                 .user(code)
                 .call()
                 .entity(CodeExplanation.class);
