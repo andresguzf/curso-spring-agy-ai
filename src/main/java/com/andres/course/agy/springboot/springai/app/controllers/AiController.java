@@ -1,8 +1,8 @@
 package com.andres.course.agy.springboot.springai.app.controllers;
 
-import com.andres.course.agy.springboot.springai.app.dto.CodeDto;
 import com.andres.course.agy.springboot.springai.app.dto.Requirement;
 import com.andres.course.agy.springboot.springai.app.services.AiService;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,12 +35,12 @@ public class AiController {
         return this.aiService.expert(message);
     }
 
-    @PostMapping("/generate-code")
+    @PostMapping(value = "/generate-code", produces = MediaType.APPLICATION_JSON_VALUE)
     public String generateCode(@RequestBody Requirement requirement) {
         return this.aiService.generateCode(requirement);
     }
 
-    @PostMapping("/explain-code")
+    @PostMapping(value = "/explain-code", produces = MediaType.APPLICATION_JSON_VALUE)
     public String explainCode(@RequestBody String code) {
         return this.aiService.explainCode(code);
     }
