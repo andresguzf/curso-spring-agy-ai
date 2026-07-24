@@ -43,6 +43,8 @@ src/main/java/com/andres/course/agy/springboot/springai/app/
 │   └── AiController.java
 ├── dto/
 │   ├── CodeDto.java
+│   ├── CodeExplanation.java
+│   ├── LineExplanation.java
 │   └── Requirement.java
 └── services/
     ├── AiService.java
@@ -54,13 +56,14 @@ src/main/java/com/andres/course/agy/springboot/springai/app/
 2. **`AiController.java`**: Controlador REST mapeado en `/api/ai`. Inyecta `AiService` y expone los endpoints HTTP.
 3. **`Requirement.java`**: DTO (`record`) que encapsula el requerimiento de código (`requirement`).
 4. **`CodeDto.java`**: DTO (`record`) estructurado devuelto por la IA que contiene la respuesta formateada (`code`).
-5. **`AiService.java`**: Interfaz de servicio que define los contratos de negocio:
+5. **`CodeExplanation.java` / `LineExplanation.java`**: DTOs (`record`) mapeados directamente mediante `.entity(CodeExplanation.class)` que estructuran la explicación del código (`language`, `summary`, `lineByLine`, `finalExplanation`).
+6. **`AiService.java`**: Interfaz de servicio que define los contratos de negocio:
    - `String generate(String message)`
    - `String greeting(String name)`
    - `String expert(String message)`
    - `String generateCode(Requirement requirement)`
-   - `String explainCode(String code)`
-6. **`AiServiceImpl.java`**: Implementación anotada con `@Service`. Utiliza `ChatClient` de Spring AI con System Prompts y salidas estructuradas JSON.
+   - `CodeExplanation explainCode(String code)`
+7. **`AiServiceImpl.java`**: Implementación anotada con `@Service`. Utiliza `ChatClient` de Spring AI con System Prompts y salidas estructuradas JSON.
 
 ---
 

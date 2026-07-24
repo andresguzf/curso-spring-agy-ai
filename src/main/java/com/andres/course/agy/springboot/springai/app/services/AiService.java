@@ -1,6 +1,7 @@
 package com.andres.course.agy.springboot.springai.app.services;
 
 import com.andres.course.agy.springboot.springai.app.dto.CodeDto;
+import com.andres.course.agy.springboot.springai.app.dto.CodeExplanation;
 import com.andres.course.agy.springboot.springai.app.dto.Requirement;
 
 public interface AiService {
@@ -12,5 +13,5 @@ public interface AiService {
 
     String generateCode(Requirement requirement);
 
-    String explainCode(String code);
+    CodeExplanation explainCode(String code);
 }

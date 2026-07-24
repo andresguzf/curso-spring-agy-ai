@@ -1,6 +1,7 @@
 package com.andres.course.agy.springboot.springai.app.services;
 
 import com.andres.course.agy.springboot.springai.app.dto.CodeDto;
+import com.andres.course.agy.springboot.springai.app.dto.CodeExplanation;
 import com.andres.course.agy.springboot.springai.app.dto.Requirement;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
@@ -62,25 +63,11 @@ public class AiServiceImpl implements AiService {
     }
 
     @Override
-    public String explainCode(String code) {
+    public CodeExplanation explainCode(String code) {
         return this.chatClient.prompt()
-                .system("""
-                        Eres un profesor experto en programación. Explica el código recibido en español, de forma simple, paso a paso y línea por línea.
-                        La respuesta debe ser únicamente JSON válido, sin Markdown ni bloques de código, con la siguiente estructura exacta:
-                        {
-                            "language": "string",
-                            "summary": "string",
-                            "lineByLine": [
-                                {
-                                    "line": "línea 1",
-                                    "explanation": "explicación de la línea 1"
-                                }
-                            ],
-                            "finalExplanation": "explicación final"
-                        }
-                        """)
+                .system("Eres un profesor experto en programación. Explica el código recibido en español, de forma simple, paso a paso y línea por línea.")
                 .user(code)
                 .call()
-                .content();
+                .entity(CodeExplanation.class);
     }
 }

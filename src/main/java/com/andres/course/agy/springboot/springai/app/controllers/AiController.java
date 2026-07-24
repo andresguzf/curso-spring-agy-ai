@@ -1,5 +1,6 @@
 package com.andres.course.agy.springboot.springai.app.controllers;
 
+import com.andres.course.agy.springboot.springai.app.dto.CodeExplanation;
 import com.andres.course.agy.springboot.springai.app.dto.Requirement;
 import com.andres.course.agy.springboot.springai.app.services.AiService;
 import org.springframework.http.MediaType;
@@ -40,8 +41,8 @@ public class AiController {
         return this.aiService.generateCode(requirement);
     }
 
-    @PostMapping(value = "/explain-code", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String explainCode(@RequestBody String code) {
+    @PostMapping("/explain-code")
+    public CodeExplanation explainCode(@RequestBody String code) {
         return this.aiService.explainCode(code);
     }
 }
