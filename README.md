@@ -79,6 +79,18 @@ Recibe un requerimiento en JSON y devuelve un objeto JSON estructurado `CodeDto`
     -d '{"requirement": "Crea una clase Singleton en Java 25"}'
   ```
 
+### 5. Explicación Paso a Paso de Código (`/api/ai/explain-code`)
+Recibe código por POST y devuelve una explicación en JSON paso a paso y línea por línea realizada por un profesor experto en programación.
+
+- **Método:** `POST`
+- **Cuerpo (Body):** Texto plano (`text/plain`)
+- **Ejemplo con curl:**
+  ```bash
+  curl -X POST "http://localhost:8080/api/ai/explain-code" \
+    -H "Content-Type: text/plain" \
+    -d "public class Calculator { public int add(int a, int b) { return a + b; } }"
+  ```
+
 ---
 
 ## 🚀 Ejecución del Proyecto

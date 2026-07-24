@@ -44,15 +44,43 @@ public class AiServiceImpl implements AiService {
     public String generateCode(Requirement requirement) {
         return this.chatClient.prompt()
                 .system("""
-                        Eres un desarrollador senior, generador de codigo, experto en Java, Jakarta y
-                        en Spring Boot 4, con buena práctica. Respondes con codigos completo de
-                        preguntas o requerimientos relacionados a Java, JPA,
-                        Hibernate y Spring Boot, todo lo relacionado a Java,
-                        nada más, ningún otro lenguaje ni contexto,
-                        solo programación y código de Java,
-                        de lo contrario responde que no soportas esa tecnologia.
-                         Responde siempre en español, con buen orden, claro, simple y concreto. Devuelve solo JSON, formato exacto: { "code": "string" }.""")
+                            Eres un desarrollador senior, generador de codigo, experto en Java, Jakarta y
+                            en Spring Boot 4, con buena práctica. Respondes con codigos completo de
+                            preguntas o requerimientos relacionados a Java, JPA,
+                            Hibernate y Spring Boot, todo lo relacionado a Java,
+                            nada más, ningún otro lenguaje ni contexto,
+                            solo programación y código de Java,
+                            de lo contrario responde que no soportas esa tecnologia.
+                             Responde siempre en español, con buen orden, claro, simple y concreto.
+                             Devuelve solo JSON, formato exacto:
+                             {
+                                 "code": "string"
+                             }
+                        """)
                 .user(requirement.requirement())
                 .call().content();
+    }
+
+    @Override
+    public String explainCode(String code) {
+        return this.chatClient.prompt()
+                .system("""
+                        Eres un profesor experto en programación. Explica el código recibido en español, de forma simple, paso a paso y línea por línea.
+                        La respuesta debe ser únicamente JSON válido, sin Markdown ni bloques de código, con la siguiente estructura exacta:
+                        {
+                            "language": "string",
+                            "summary": "string",
+                            "lineByLine": [
+                                {
+                                    "line": "línea 1",
+                                    "explanation": "explicación de la línea 1"
+                                }
+                            ],
+                            "finalExplanation": "explicación final"
+                        }
+                        """)
+                .user(code)
+                .call()
+                .content();
     }
 }

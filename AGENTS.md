@@ -58,8 +58,9 @@ src/main/java/com/andres/course/agy/springboot/springai/app/
    - `String generate(String message)`
    - `String greeting(String name)`
    - `String expert(String message)`
-   - `CodeDto generateCode(Requirement requirement)`
-6. **`AiServiceImpl.java`**: Implementación anotada con `@Service`. Utiliza `ChatClient` de Spring AI con System Prompts y salidas estructuradas (`.entity(CodeDto.class)`).
+   - `String generateCode(Requirement requirement)`
+   - `String explainCode(String code)`
+6. **`AiServiceImpl.java`**: Implementación anotada con `@Service`. Utiliza `ChatClient` de Spring AI con System Prompts y salidas estructuradas JSON.
 
 ---
 
@@ -94,7 +95,13 @@ spring.ai.ollama.chat.model=qwen3:4b
 - **Ruta:** `POST /api/ai/generate-code`
 - **Cuerpo (Body):** JSON `Requirement` (`{"requirement": "..."}`)
 - **Respuesta:** JSON `CodeDto` (`{"code": "..."}`)
-- **Comportamiento:** Emplea un System Prompt de Desarrollador Senior en Java/Spring Boot 4 y mapea la respuesta estructurada a `CodeDto`.
+- **Comportamiento:** Emplea un System Prompt de Desarrollador Senior en Java/Spring Boot 4 y responde en formato JSON.
+
+### 5. Explicación Paso a Paso de Código (POST)
+- **Ruta:** `POST /api/ai/explain-code`
+- **Cuerpo (Body):** Texto plano (`text/plain`) con el código a explicar.
+- **Respuesta:** JSON puro estructurado con `language`, `summary`, `lineByLine` (arreglo de líneas y explicación) y `finalExplanation`.
+- **Comportamiento:** Usa un System Prompt de profesor experto en programación solicitando una explicación simple, paso a paso y línea por línea en español.
 
 ---
 

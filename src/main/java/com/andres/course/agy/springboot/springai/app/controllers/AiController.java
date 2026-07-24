@@ -39,4 +39,9 @@ public class AiController {
     public String generateCode(@RequestBody Requirement requirement) {
         return this.aiService.generateCode(requirement);
     }
+
+    @PostMapping("/explain-code")
+    public String explainCode(@RequestBody String code) {
+        return this.aiService.explainCode(code);
+    }
 }

@@ -11,4 +11,6 @@ public interface AiService {
     String expert(String message);
 
     String generateCode(Requirement requirement);
+
+    String explainCode(String code);
 }
