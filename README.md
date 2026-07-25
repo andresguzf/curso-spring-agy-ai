@@ -27,7 +27,7 @@ Aplicación Spring Boot para la integración con inteligencia artificial utiliza
 El proyecto implementa una arquitectura desacoplada por capas:
 
 - **Controlador:** [AiController.java](file:///Users/andres/Desktop/SpringAntigravityAI/5-spring-ai/src/main/java/com/andres/course/agy/springboot/springai/app/controllers/AiController.java) - Expone los endpoints REST `/api/ai`.
-- **DTOs (Java Records):** [Requirement.java](file:///Users/andres/Desktop/SpringAntigravityAI/5-spring-ai/src/main/java/com/andres/course/agy/springboot/springai/app/dto/Requirement.java), [CodeDto.java](file:///Users/andres/Desktop/SpringAntigravityAI/5-spring-ai/src/main/java/com/andres/course/agy/springboot/springai/app/dto/CodeDto.java), [CodeExplanation.java](file:///Users/andres/Desktop/SpringAntigravityAI/5-spring-ai/src/main/java/com/andres/course/agy/springboot/springai/app/dto/CodeExplanation.java), [LineExplanation.java](file:///Users/andres/Desktop/SpringAntigravityAI/5-spring-ai/src/main/java/com/andres/course/agy/springboot/springai/app/dto/LineExplanation.java) - Representación de datos de entrada/salida.
+- **DTOs (Java Records):** [Requirement.java](file:///Users/andres/Desktop/SpringAntigravityAI/5-spring-ai/src/main/java/com/andres/course/agy/springboot/springai/app/dto/Requirement.java), [CodeDto.java](file:///Users/andres/Desktop/SpringAntigravityAI/5-spring-ai/src/main/java/com/andres/course/agy/springboot/springai/app/dto/CodeDto.java), [CodeExplanation.java](file:///Users/andres/Desktop/SpringAntigravityAI/5-spring-ai/src/main/java/com/andres/course/agy/springboot/springai/app/dto/CodeExplanation.java), [LineExplanation.java](file:///Users/andres/Desktop/SpringAntigravityAI/5-spring-ai/src/main/java/com/andres/course/agy/springboot/springai/app/dto/LineExplanation.java), [TextAnalysis.java](file:///Users/andres/Desktop/SpringAntigravityAI/5-spring-ai/src/main/java/com/andres/course/agy/springboot/springai/app/dto/TextAnalysis.java) - Representación de datos de entrada/salida.
 - **Interfaz de Servicio:** [AiService.java](file:///Users/andres/Desktop/SpringAntigravityAI/5-spring-ai/src/main/java/com/andres/course/agy/springboot/springai/app/services/AiService.java) - Define las operaciones disponibles.
 - **Implementación del Servicio:** [AiServiceImpl.java](file:///Users/andres/Desktop/SpringAntigravityAI/5-spring-ai/src/main/java/com/andres/course/agy/springboot/springai/app/services/AiServiceImpl.java) - Realiza la comunicación con Ollama mediante `ChatClient`.
 
@@ -99,6 +99,18 @@ Genera un resumen sobre un tema tecnológico recibido por parámetro con título
 - **Ejemplo con curl:**
   ```bash
   curl "http://localhost:8080/api/ai/chat-format?topic=Docker"
+  ```
+
+### 7. Análisis de Texto Estructurado (`/api/ai/analyze`)
+Recibe un texto por POST y devuelve un objeto JSON estructurado `TextAnalysis` con resumen, 3 puntos clave y análisis de sentimiento.
+
+- **Método:** `POST`
+- **Cuerpo (Body):** Texto plano (`text/plain`)
+- **Ejemplo con curl:**
+  ```bash
+  curl -X POST "http://localhost:8080/api/ai/analyze" \
+    -H "Content-Type: text/plain" \
+    -d "Spring Boot simplifica el desarrollo de aplicaciones Java de forma increíble."
   ```
 
 ---

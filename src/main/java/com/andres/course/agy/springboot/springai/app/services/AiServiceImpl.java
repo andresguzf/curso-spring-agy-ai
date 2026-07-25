@@ -3,6 +3,7 @@ package com.andres.course.agy.springboot.springai.app.services;
 import com.andres.course.agy.springboot.springai.app.dto.CodeDto;
 import com.andres.course.agy.springboot.springai.app.dto.CodeExplanation;
 import com.andres.course.agy.springboot.springai.app.dto.Requirement;
+import com.andres.course.agy.springboot.springai.app.dto.TextAnalysis;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
@@ -93,9 +94,32 @@ public class AiServiceImpl implements AiService {
                         - Un título
                         - Seguidos de tres puntos importantes, máximo dos líneas por cada uno
                         - Un ejemplo práctico
+                        Maqueta en una estructura HTML, una página con estilo CSS, con Tailwind, theme oscuro, con colores pasteles, sombras, que quede bien bonito como si fuera una página web.
+                        Responde solo en español.
                         """)
                 .user(topic)
                 .call()
                 .content();
+    }
+
+    @Override
+    public TextAnalysis analyze(String text) {
+        return this.chatClient.prompt()
+                .system("""
+                        Eres un experto analista de texto. Analiza el texto recibido y resume el contenido en tres puntos clave en español.
+                        La respuesta debe ser únicamente JSON válido, sin Markdown ni bloques de código, con los siguientes campos exactos:
+                        {
+                            "summary": "resumen del texto en español",
+                            "keypoint": [
+                                "punto clave 1",
+                                "punto clave 2",
+                                "punto clave 3"
+                            ],
+                            "sentiment": "positivo, neutral o negativo"
+                        }
+                        """)
+                .user(text)
+                .call()
+                .entity(TextAnalysis.class);
     }
 }

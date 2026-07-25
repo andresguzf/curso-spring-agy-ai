@@ -45,7 +45,8 @@ src/main/java/com/andres/course/agy/springboot/springai/app/
 │   ├── CodeDto.java
 │   ├── CodeExplanation.java
 │   ├── LineExplanation.java
-│   └── Requirement.java
+│   ├── Requirement.java
+│   └── TextAnalysis.java
 └── services/
     ├── AiService.java
     └── AiServiceImpl.java
@@ -57,14 +58,16 @@ src/main/java/com/andres/course/agy/springboot/springai/app/
 3. **`Requirement.java`**: DTO (`record`) que encapsula el requerimiento de código (`requirement`).
 4. **`CodeDto.java`**: DTO (`record`) estructurado devuelto por la IA que contiene la respuesta formateada (`code`).
 5. **`CodeExplanation.java` / `LineExplanation.java`**: DTOs (`record`) mapeados directamente mediante `.entity(CodeExplanation.class)` que estructuran la explicación del código (`language`, `summary`, `lineByLine`, `finalExplanation`).
-6. **`AiService.java`**: Interfaz de servicio que define los contratos de negocio:
+6. **`TextAnalysis.java`**: DTO (`record`) estructurado devuelto por la IA para el análisis de texto (`summary`, `keypoint`, `sentiment`).
+7. **`AiService.java`**: Interfaz de servicio que define los contratos de negocio:
    - `String generate(String message)`
    - `String greeting(String name)`
    - `String expert(String message)`
    - `String generateCode(Requirement requirement)`
    - `CodeExplanation explainCode(String code)`
    - `String chatFormat(String topic)`
-7. **`AiServiceImpl.java`**: Implementación anotada con `@Service`. Utiliza `ChatClient` de Spring AI con System Prompts y salidas estructuradas JSON.
+   - `TextAnalysis analyze(String text)`
+8. **`AiServiceImpl.java`**: Implementación anotada con `@Service`. Utiliza `ChatClient` de Spring AI con System Prompts y salidas estructuradas JSON.
 
 ---
 
@@ -111,6 +114,12 @@ spring.ai.ollama.chat.model=qwen3:4b
 - **Ruta:** `GET /api/ai/chat-format`
 - **Parámetros:** `topic` (opcional, default: `Spring Boot 4`)
 - **Comportamiento:** Usa un System Prompt de experto en tecnología para generar un título, 3 puntos clave (máximo 2 líneas por punto) y un ejemplo práctico.
+
+### 7. Análisis de Texto Estructurado (POST)
+- **Ruta:** `POST /api/ai/analyze`
+- **Cuerpo (Body):** Texto plano (`text/plain`) con el texto a analizar.
+- **Respuesta:** JSON `TextAnalysis` (`summary`, `keypoint` [3 puntos clave], `sentiment`).
+- **Comportamiento:** Resume el texto en 3 puntos clave y analiza el sentimiento (positivo, neutral, negativo).
 
 ---
 

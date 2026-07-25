@@ -2,6 +2,7 @@ package com.andres.course.agy.springboot.springai.app.controllers;
 
 import com.andres.course.agy.springboot.springai.app.dto.CodeExplanation;
 import com.andres.course.agy.springboot.springai.app.dto.Requirement;
+import com.andres.course.agy.springboot.springai.app.dto.TextAnalysis;
 import com.andres.course.agy.springboot.springai.app.services.AiService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,8 +47,13 @@ public class AiController {
         return this.aiService.explainCode(code);
     }
 
-    @GetMapping("/chat-format")
+    @GetMapping(value = "/chat-format", produces = MediaType.TEXT_HTML_VALUE)
     public String chatFormat(@RequestParam(defaultValue = "Spring Boot 4") String topic) {
         return this.aiService.chatFormat(topic);
+    }
+
+    @PostMapping("/analyze")
+    public TextAnalysis analyze(@RequestBody String text) {
+        return this.aiService.analyze(text);
     }
 }
