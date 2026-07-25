@@ -5,6 +5,7 @@ import com.andres.course.agy.springboot.springai.app.dto.CodeDto;
 import com.andres.course.agy.springboot.springai.app.dto.CodeExplanation;
 import com.andres.course.agy.springboot.springai.app.dto.Requirement;
 import com.andres.course.agy.springboot.springai.app.dto.TextAnalysis;
+import com.andres.course.agy.springboot.springai.app.dto.TicketClassification;
 
 public interface AiService {
     String generate(String message);
@@ -22,4 +23,6 @@ public interface AiService {
     TextAnalysis analyze(String text);
 
     CityInfo cityInfo(String city);
+
+    TicketClassification classifyType(String text);
 }

@@ -47,7 +47,8 @@ src/main/java/com/andres/course/agy/springboot/springai/app/
 │   ├── CodeExplanation.java
 │   ├── LineExplanation.java
 │   ├── Requirement.java
-│   └── TextAnalysis.java
+│   ├── TextAnalysis.java
+│   └── TicketClassification.java
 └── services/
     ├── AiService.java
     └── AiServiceImpl.java
@@ -61,7 +62,8 @@ src/main/java/com/andres/course/agy/springboot/springai/app/
 5. **`CodeExplanation.java` / `LineExplanation.java`**: DTOs (`record`) mapeados directamente mediante `.entity(CodeExplanation.class)` que estructuran la explicación del código (`language`, `summary`, `lineByLine`, `finalExplanation`).
 6. **`TextAnalysis.java`**: DTO (`record`) estructurado devuelto por la IA para el análisis de texto (`summary`, `keypoint`, `sentiment`).
 7. **`CityInfo.java`**: DTO (`record`) estructurado devuelto por la IA con datos geográficos e información verídica de una ciudad (`city`, `country`, `population`, `description`).
-8. **`AiService.java`**: Interfaz de servicio que define los contratos de negocio:
+8. **`TicketClassification.java`**: DTO (`record`) estructurado devuelto por la IA para clasificar tickets de soporte (`category`, `reason`, `priority`).
+9. **`AiService.java`**: Interfaz de servicio que define los contratos de negocio:
    - `String generate(String message)`
    - `String greeting(String name)`
    - `String expert(String message)`
@@ -70,7 +72,8 @@ src/main/java/com/andres/course/agy/springboot/springai/app/
    - `String chatFormat(String topic)`
    - `TextAnalysis analyze(String text)`
    - `CityInfo cityInfo(String city)`
-9. **`AiServiceImpl.java`**: Implementación anotada con `@Service`. Utiliza `ChatClient` de Spring AI con System Prompts y salidas estructuradas JSON.
+   - `TicketClassification classifyType(String text)`
+10. **`AiServiceImpl.java`**: Implementación anotada con `@Service`. Utiliza `ChatClient` de Spring AI con System Prompts y salidas estructuradas JSON.
 
 ---
 
@@ -129,6 +132,12 @@ spring.ai.ollama.chat.model=qwen3:4b
 - **Parámetros:** `city` (opcional, default: `Santiago`)
 - **Respuesta:** JSON `CityInfo` (`city`, `country`, `population`, `description`).
 - **Comportamiento:** Retorna información verídica y estructurada de la ciudad consultada.
+
+### 9. Clasificación de Tickets de Soporte (POST)
+- **Ruta:** `POST /api/ai/classify-type`
+- **Cuerpo (Body):** Texto plano (`text/plain`) con el texto del ticket.
+- **Respuesta:** JSON `TicketClassification` (`category`, `reason`, `priority`).
+- **Comportamiento:** Clasifica el ticket en `soporte`, `ventas` o `reclamos` indicando la razón y la prioridad.
 
 ---
 

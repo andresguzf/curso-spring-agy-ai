@@ -4,6 +4,7 @@ import com.andres.course.agy.springboot.springai.app.dto.CityInfo;
 import com.andres.course.agy.springboot.springai.app.dto.CodeExplanation;
 import com.andres.course.agy.springboot.springai.app.dto.Requirement;
 import com.andres.course.agy.springboot.springai.app.dto.TextAnalysis;
+import com.andres.course.agy.springboot.springai.app.dto.TicketClassification;
 import com.andres.course.agy.springboot.springai.app.services.AiService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,5 +62,10 @@ public class AiController {
     @GetMapping("/city-info")
     public CityInfo cityInfo(@RequestParam(defaultValue = "Santiago") String city) {
         return this.aiService.cityInfo(city);
+    }
+
+    @PostMapping("/classify-type")
+    public TicketClassification classifyType(@RequestBody String text) {
+        return this.aiService.classifyType(text);
     }
 }

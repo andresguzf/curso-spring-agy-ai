@@ -5,6 +5,7 @@ import com.andres.course.agy.springboot.springai.app.dto.CodeDto;
 import com.andres.course.agy.springboot.springai.app.dto.CodeExplanation;
 import com.andres.course.agy.springboot.springai.app.dto.Requirement;
 import com.andres.course.agy.springboot.springai.app.dto.TextAnalysis;
+import com.andres.course.agy.springboot.springai.app.dto.TicketClassification;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
@@ -129,6 +130,8 @@ public class AiServiceImpl implements AiService {
         return this.chatClient.prompt()
                 .system("""
                         Eres un experto informador turístico y geógrafo. Responde únicamente con información verídica y correcta sobre la ciudad consultada.
+                        No inventes información. Si no conoces la información, por ejemplo la población o cualquier dato, lo puedes ir a buscar a internet.
+                        Si el dato no lo encuentras, déjalo como null.
                         Proporciona los datos en español en formato JSON válido, sin Markdown ni bloques de código, con los siguientes campos exactos:
                         {
                             "city": "nombre de la ciudad",
@@ -140,5 +143,26 @@ public class AiServiceImpl implements AiService {
                 .user(city)
                 .call()
                 .entity(CityInfo.class);
+    }
+
+    @Override
+    public TicketClassification classifyType(String text) {
+        return this.chatClient.prompt()
+                .system("""
+                        Actúa como un clasificador de tickets de soporte. Clasifica el texto recibido en una de las siguientes tres categorías:
+                        - soporte
+                        - ventas
+                        - reclamos
+                        
+                        La respuesta debe ser únicamente JSON válido como ticket de soporte, sin Markdown ni bloques de código, con los siguientes campos exactos:
+                        {
+                            "category": "soporte | ventas | reclamos",
+                            "reason": "explicación o razón de la clasificación",
+                            "priority": "alta | media | baja"
+                        }
+                        """)
+                .user(text)
+                .call()
+                .entity(TicketClassification.class);
     }
 }
