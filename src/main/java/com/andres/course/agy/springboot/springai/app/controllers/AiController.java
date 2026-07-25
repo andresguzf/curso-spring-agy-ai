@@ -45,4 +45,9 @@ public class AiController {
     public CodeExplanation explainCode(@RequestBody String code) {
         return this.aiService.explainCode(code);
     }
+
+    @GetMapping("/chat-format")
+    public String chatFormat(@RequestParam(defaultValue = "Spring Boot 4") String topic) {
+        return this.aiService.chatFormat(topic);
+    }
 }

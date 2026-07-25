@@ -84,4 +84,18 @@ public class AiServiceImpl implements AiService {
                 .call()
                 .entity(CodeExplanation.class);
     }
+
+    @Override
+    public String chatFormat(String topic) {
+        return this.chatClient.prompt()
+                .system("""
+                        Eres un experto en tecnología. Responde al tema solicitado de forma clara y bien formateada utilizando los siguientes puntos:
+                        - Un título
+                        - Seguidos de tres puntos importantes, máximo dos líneas por cada uno
+                        - Un ejemplo práctico
+                        """)
+                .user(topic)
+                .call()
+                .content();
+    }
 }

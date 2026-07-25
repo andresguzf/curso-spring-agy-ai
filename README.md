@@ -91,6 +91,16 @@ Recibe código por POST y devuelve una explicación en JSON paso a paso y línea
     -d "public class Calculator { public int add(int a, int b) { return a + b; } }"
   ```
 
+### 6. Formato Estructurado de Tema Tecnológico (`/api/ai/chat-format`)
+Genera un resumen sobre un tema tecnológico recibido por parámetro con título, 3 puntos clave y un ejemplo práctico.
+
+- **Método:** `GET`
+- **Parámetro Query:** `topic` (opcional)
+- **Ejemplo con curl:**
+  ```bash
+  curl "http://localhost:8080/api/ai/chat-format?topic=Docker"
+  ```
+
 ---
 
 ## 🚀 Ejecución del Proyecto

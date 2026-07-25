@@ -14,4 +14,6 @@ public interface AiService {
     String generateCode(Requirement requirement);
 
     CodeExplanation explainCode(String code);
+
+    String chatFormat(String topic);
 }

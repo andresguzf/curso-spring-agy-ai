@@ -63,6 +63,7 @@ src/main/java/com/andres/course/agy/springboot/springai/app/
    - `String expert(String message)`
    - `String generateCode(Requirement requirement)`
    - `CodeExplanation explainCode(String code)`
+   - `String chatFormat(String topic)`
 7. **`AiServiceImpl.java`**: Implementación anotada con `@Service`. Utiliza `ChatClient` de Spring AI con System Prompts y salidas estructuradas JSON.
 
 ---
@@ -105,6 +106,11 @@ spring.ai.ollama.chat.model=qwen3:4b
 - **Cuerpo (Body):** Texto plano (`text/plain`) con el código a explicar.
 - **Respuesta:** JSON puro estructurado con `language`, `summary`, `lineByLine` (arreglo de líneas y explicación) y `finalExplanation`.
 - **Comportamiento:** Usa un System Prompt de profesor experto en programación solicitando una explicación simple, paso a paso y línea por línea en español.
+
+### 6. Formato Estructurado de Tema Tecnológico
+- **Ruta:** `GET /api/ai/chat-format`
+- **Parámetros:** `topic` (opcional, default: `Spring Boot 4`)
+- **Comportamiento:** Usa un System Prompt de experto en tecnología para generar un título, 3 puntos clave (máximo 2 líneas por punto) y un ejemplo práctico.
 
 ---
 
