@@ -42,6 +42,7 @@ src/main/java/com/andres/course/agy/springboot/springai/app/
 ├── controllers/
 │   └── AiController.java
 ├── dto/
+│   ├── CityInfo.java
 │   ├── CodeDto.java
 │   ├── CodeExplanation.java
 │   ├── LineExplanation.java
@@ -59,7 +60,8 @@ src/main/java/com/andres/course/agy/springboot/springai/app/
 4. **`CodeDto.java`**: DTO (`record`) estructurado devuelto por la IA que contiene la respuesta formateada (`code`).
 5. **`CodeExplanation.java` / `LineExplanation.java`**: DTOs (`record`) mapeados directamente mediante `.entity(CodeExplanation.class)` que estructuran la explicación del código (`language`, `summary`, `lineByLine`, `finalExplanation`).
 6. **`TextAnalysis.java`**: DTO (`record`) estructurado devuelto por la IA para el análisis de texto (`summary`, `keypoint`, `sentiment`).
-7. **`AiService.java`**: Interfaz de servicio que define los contratos de negocio:
+7. **`CityInfo.java`**: DTO (`record`) estructurado devuelto por la IA con datos geográficos e información verídica de una ciudad (`city`, `country`, `population`, `description`).
+8. **`AiService.java`**: Interfaz de servicio que define los contratos de negocio:
    - `String generate(String message)`
    - `String greeting(String name)`
    - `String expert(String message)`
@@ -67,7 +69,8 @@ src/main/java/com/andres/course/agy/springboot/springai/app/
    - `CodeExplanation explainCode(String code)`
    - `String chatFormat(String topic)`
    - `TextAnalysis analyze(String text)`
-8. **`AiServiceImpl.java`**: Implementación anotada con `@Service`. Utiliza `ChatClient` de Spring AI con System Prompts y salidas estructuradas JSON.
+   - `CityInfo cityInfo(String city)`
+9. **`AiServiceImpl.java`**: Implementación anotada con `@Service`. Utiliza `ChatClient` de Spring AI con System Prompts y salidas estructuradas JSON.
 
 ---
 
@@ -120,6 +123,12 @@ spring.ai.ollama.chat.model=qwen3:4b
 - **Cuerpo (Body):** Texto plano (`text/plain`) con el texto a analizar.
 - **Respuesta:** JSON `TextAnalysis` (`summary`, `keypoint` [3 puntos clave], `sentiment`).
 - **Comportamiento:** Resume el texto en 3 puntos clave y analiza el sentimiento (positivo, neutral, negativo).
+
+### 8. Información Geográfica de una Ciudad
+- **Ruta:** `GET /api/ai/city-info`
+- **Parámetros:** `city` (opcional, default: `Santiago`)
+- **Respuesta:** JSON `CityInfo` (`city`, `country`, `population`, `description`).
+- **Comportamiento:** Retorna información verídica y estructurada de la ciudad consultada.
 
 ---
 

@@ -1,5 +1,6 @@
 package com.andres.course.agy.springboot.springai.app.controllers;
 
+import com.andres.course.agy.springboot.springai.app.dto.CityInfo;
 import com.andres.course.agy.springboot.springai.app.dto.CodeExplanation;
 import com.andres.course.agy.springboot.springai.app.dto.Requirement;
 import com.andres.course.agy.springboot.springai.app.dto.TextAnalysis;
@@ -55,5 +56,10 @@ public class AiController {
     @PostMapping("/analyze")
     public TextAnalysis analyze(@RequestBody String text) {
         return this.aiService.analyze(text);
+    }
+
+    @GetMapping("/city-info")
+    public CityInfo cityInfo(@RequestParam(defaultValue = "Santiago") String city) {
+        return this.aiService.cityInfo(city);
     }
 }

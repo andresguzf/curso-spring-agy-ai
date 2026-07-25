@@ -1,5 +1,6 @@
 package com.andres.course.agy.springboot.springai.app.services;
 
+import com.andres.course.agy.springboot.springai.app.dto.CityInfo;
 import com.andres.course.agy.springboot.springai.app.dto.CodeDto;
 import com.andres.course.agy.springboot.springai.app.dto.CodeExplanation;
 import com.andres.course.agy.springboot.springai.app.dto.Requirement;
@@ -121,5 +122,23 @@ public class AiServiceImpl implements AiService {
                 .user(text)
                 .call()
                 .entity(TextAnalysis.class);
+    }
+
+    @Override
+    public CityInfo cityInfo(String city) {
+        return this.chatClient.prompt()
+                .system("""
+                        Eres un experto informador turístico y geógrafo. Responde únicamente con información verídica y correcta sobre la ciudad consultada.
+                        Proporciona los datos en español en formato JSON válido, sin Markdown ni bloques de código, con los siguientes campos exactos:
+                        {
+                            "city": "nombre de la ciudad",
+                            "country": "país al que pertenece",
+                            "population": "población estimada o exacta",
+                            "description": "descripción de la ciudad"
+                        }
+                        """)
+                .user(city)
+                .call()
+                .entity(CityInfo.class);
     }
 }
