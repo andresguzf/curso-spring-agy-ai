@@ -46,6 +46,7 @@ Cuando se cree un nuevo proyecto de Spring Boot:
   spring.h2.console.enabled=true
   spring.jpa.hibernate.ddl-auto=update
   ```
+- **Spring AI / Ollama**: Para la configuración del modelo de Ollama en `application.properties`, usa **SIEMPRE** `spring.ai.ollama.chat.model` (ejemplo: `spring.ai.ollama.chat.model=qwen3:4b`). La propiedad `spring.ai.ollama.chat.options.model` es obsoleta y **NO** debe utilizarse.
 
 ## 3. Arquitectura en Capas
 
